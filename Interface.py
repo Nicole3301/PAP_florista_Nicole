@@ -51,13 +51,13 @@ class ClienteApp:
         
         
         # Botão para editar cliente
-        btn_add = tk.Button(frame_form, text="Editar Cliente")
+        btn_add = tk.Button(frame_form, text="Editar Cliente", command=self.editar_clientes)
         btn_add.grid(row=6, column=1, columnspan=2, pady=10)
         
         
         
         #Botão para remover cliente
-        btn_add = tk.Button(frame_form, text="Remover Cliente")
+        btn_add = tk.Button(frame_form, text="Remover Cliente", command=self.remover_cliente)
         btn_add.grid(row=6, column=2, pady=10)
         
 
@@ -95,21 +95,66 @@ class ClienteApp:
 
 
             
-            cliente_id = self.cliente.editar_cliente
+            cliente_id = self.cliente.criarCliente
             messagebox.showinfo("Sucesso", f"Cliente criado com ID {cliente_id}")
             self.carregar_clientes()
         except Exception as e:
             messagebox.showerror("Erro", str(e))    
-    """ 
+
     def editar_clientes(self):
-        cliente_selecionado = self.tree.selection()
-        if not cliente_selecionado:
-            messagebox.showwarning("Selecione um cliente")
-            return
-    """    
+        try:
+            cliente_selecionado = self.tree.focus()
+            if not cliente_selecionado:
+                messagebox.showerror("Aviso", "Selecione um cliente!")
+                return
         
+            valores = self.tree.item(cliente_selecionado, "values")
+            id_cliente = valores[0]
+
+            self.id_cliente_edicao = id_cliente
+
+            self.entry_nome.delete(0, tk.END)
+            self.entry_nome.insert(0, valores[1])
+
+            self.entry_email.delete(0, tk.END)
+            self.entry_email.insert(0, valores[2])
+
+            self.entry_telefone.delete(0, tk.END)
+            self.entry_telefone.insert(0, valores[3])
+
+            self.entry_morada.delete(0, tk.END)
+            self.entry_morada.insert(0, valores[4])
+
+
+            cliente_id = self.cliente.atualizarCliente
+            messagebox.showinfo("Sucesso", f"Os dados do cliente {cliente_id}")
+            self.carregar_clientes()
+        except Exception as e:
+            messagebox.showerror("Erro", str(e))
+
+
     
-    
+
+
+    def remover_cliente(self):
+        cliente_selecionado = self.tree.focus()
+        if not self.tree.focus():
+            messagebox.showerror("Aviso", "Selecione um cliente primeiro!")
+            return
+
+        valores = self.tree.item(cliente_selecionado, "values")
+        id_cliente = valores[0]
+
+        confirm = messagebox.askyesno("Confirmar", f"Tem a certeza que deseja remover o cliente {valores[1]}?")
+        if confirm:
+            try:
+                self.cliente.eliminarCliente(id_cliente)
+                self.tree.delete(cliente_selecionado)
+                messagebox.showinfo("Sucesso", "Cliente removido com sucesso!")
+            except Exception as e:
+                messagebox.showerror("Error", f"Não foi possível remover o cliente: {e}")
+
+
     def carregar_clientes(self):
         for i in self.tree.get_children():
             self.tree.delete(i)
@@ -117,7 +162,7 @@ class ClienteApp:
         clientes = self.cliente.obterTodosClientes()
         for c in clientes:
             self.tree.insert("", "end", values=(c.id_cliente, c.nome, c.email, c.telefone, c.morada, c.limite_credito))
-
+            
     
     
     
