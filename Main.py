@@ -43,7 +43,6 @@ if __name__ == "__main__":
             telefone="987654321",
             morada="Rua C, 555",
             data_nascimento="1983-05-15",
-            data_registo="2013-11-02",
-            limite_credito=25000.0
+            data_registo="2013-11-02"
         )   
     )

@@ -10,4 +10,4 @@ class Utilizador(Pessoa):
         self.id_role = id_role
 
     def __repr__(self):
-        return f"<Utilizador {self.id_utilizador}: {self.username}, Role {self.id_role}>"
+        return f"<Utilizador {self.id_utilizador}: {self.username}, Role {self.id_role}>"   

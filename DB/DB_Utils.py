@@ -6,7 +6,7 @@ class PG_DB_Utils:
 
     dbname = 'teste'
     user = 'postgres'
-    password = 'nicole2008'
+    password = '2008'
     host = '127.0.0.1'
     port = 5432
 
