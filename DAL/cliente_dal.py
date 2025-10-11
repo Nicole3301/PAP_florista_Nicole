@@ -26,8 +26,7 @@ class ClienteDAL:
 
     def obterTodosClientes(self):
         query = """
-        SELECT p.id_pessoa, p.nome, p.email, p.telefone, p.morada, p.data_nascimento,
-               c.data_registo
+        SELECT p.id_pessoa, p.nome, p.email, p.telefone, p.morada, p.data_nascimento, c.data_registo
         FROM Cliente c
         INNER JOIN Pessoa p ON c.id_cliente = p.id_pessoa
 		ORDER BY p.id_pessoa ASC;
@@ -45,8 +44,6 @@ class ClienteDAL:
         ) for row in rows]
 
 
-
-
     def atualizarCliente(self, cliente: Cliente):
         query_pessoa = """
         UPDATE Pessoa
@@ -62,9 +59,6 @@ class ClienteDAL:
         """
         self.db.executaQuery(query_cliente, (cliente.data_registo, cliente.id_cliente))
 
-
-
-        
     def eliminarCliente (self, id_cliente:int):
         self.db.executaQuery("DELETE FROM Cliente WHERE id_cliente=%s", (id_cliente,))
         self.db.executaQuery("DELETE FROM Pessoa WHERE id_pessoa=%s", (id_cliente,))
