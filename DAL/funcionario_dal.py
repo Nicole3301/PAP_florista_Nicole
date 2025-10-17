@@ -16,7 +16,7 @@ class FuncionarioDAL:
 
 
         query_funcionario = """
-        INSERT INTO Funcionario (id_funcionario, cargo, departamanento, salario, data_contratacao)
+        INSERT INTO Funcionario (id_pessoa, id_funcionario, cargo, departamanento, salario, data_contratacao)
         VALUES (%s, %s, %s, %s, %s)
         """
         self.db.executaQuery(query_funcionario, (pessoa_id, funcionario.cargo, funcionario.departamento, funcionario.salario, funcionario.data_contratacao))
@@ -46,9 +46,6 @@ class FuncionarioDAL:
             data_contratacao=row[9]
         ) for row in rows]
 
-
-
-
     def atualizarFuncionario(self, funcionario: Funcionario):
         query_pessoa = """
         UPDATE Pessoa
@@ -64,9 +61,7 @@ class FuncionarioDAL:
         """
         self.db.executaQuery(query_funcionario, (funcionario.cargo, funcionario.departamento, funcionario.salario, funcionario.data_contratacao ,funcionario.id_funcionario))
 
-
-
-        
+ 
     def eliminarFuncionario(self, id_funcionario:int):
         self.db.executaQuery("DELETE FROM Funcionario WHERE id_cliente=%s", (id_funcionario,))
         self.db.executaQuery("DELETE FROM Pessoa WHERE id_pessoa=%s", (id_funcionario,))

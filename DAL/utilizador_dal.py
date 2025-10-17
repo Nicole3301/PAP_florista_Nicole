@@ -1,10 +1,10 @@
-from Models.Cliente import Cliente
+from Models.Utilizador import Utilizador
 
-class ClienteDAL:
+class UtilizadorDAL:
     def __init__(self, db):
         self.db = db
 
-    def criarCliente(self, cliente: Cliente):
+    def criarUtilizador(self, cliente: Cliente):
         
         query = """
         INSERT INTO Pessoa (nome, email, telefone, morada, data_nascimento)

@@ -15,13 +15,13 @@ class CategoriaApp:
         frame_form.pack(fill="x")
 
         # Labels e Entrys
-        tk.Label(frame_form, text="Nome:").grid(row=0, column=0, sticky="w")
+        tk.Label(frame_form, text="Nome:").grid(row=2, column=0, sticky="w")
         self.entry_nome = tk.Entry(frame_form, width=50)
-        self.entry_nome.grid(row=0, column=1, padx=5, pady=5)
+        self.entry_nome.grid(row=2, column=1, padx=5, pady=5)
 
-        tk.Label(frame_form, text="Descrição:").grid(row=1, column=0, sticky="w")
+        tk.Label(frame_form, text="Descrição:").grid(row=3, column=0, sticky="w")
         self.entry_descricao = tk.Entry(frame_form, width=50)
-        self.entry_descricao.grid(row=1, column=1, padx=5, pady=5)
+        self.entry_descricao.grid(row=3, column=1, padx=5, pady=5)
         
         
         
@@ -39,7 +39,7 @@ class CategoriaApp:
         
         #Botão para guardar as alterações do botão editar
         btn_guardar = tk.Button(frame_form, text="Guardar Alterações", command=self.guardar_edicao)
-        btn_guardar.grid(row=2, column=3, pady=5)
+        btn_guardar.grid(row=3, column=3, pady=5)
         
         
         # Tabela de clientes

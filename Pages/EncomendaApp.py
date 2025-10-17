@@ -5,6 +5,10 @@ from DAL.encomenda_dal import EncomendaDAL
 from DAL.produto_dal import ProdutoDAL
 from DB.DB_Utils import PG_DB_Utils as Database
 from DAL.cliente_dal import ClienteDAL
+from DAL.fatura_dal import FaturaDAL
+import datetime 
+import io
+
 
 
 class EncomendaApp:
@@ -18,6 +22,8 @@ class EncomendaApp:
         self.cliente_dal = ClienteDAL(self.db)
         self.cliente = self.cliente_dal.obterTodosClientes()
         self.id_encomenda_editada = None
+        self.fatura_dal = FaturaDAL(self.db)
+        self.fatura = self.fatura_dal.obterTodasFaturas()
     
         frame_form = tk.Frame(self.root, padx=10, pady=10)
         frame_form.pack(fill="x")
@@ -57,7 +63,7 @@ class EncomendaApp:
         btn_remover = tk.Button(frame_form, text="Remover Encomenda", command=self.remover_encomenda)
         btn_remover.grid(row=5, column=1, columnspan=1, pady=5)
         
-        btn_fatura = tk.Button(frame_form, text="Fatura")
+        btn_fatura = tk.Button(frame_form, text="Fatura", command=self.mostrar_fatura)
         btn_fatura.grid(row=1, column=3, pady=5)
         
         btn_editar= tk.Button(frame_form, text="Alterar Estado", command=self.mudar_estado)
@@ -196,6 +202,21 @@ class EncomendaApp:
         if nome_estado in estados:
             return nome_estado    
         return None
+    
+    def get_id_encomenda(self, id_encomenda):
+        encomendas = self.encomenda_dal.obterTodasEncomendas()
+        for e in encomendas:
+            if e.id_encomenda == id_encomenda:
+                return e
+        return None
+    
+    def obterFaturaEncomenda(self, id_encomenda):
+        faturas = self.fatura_dal.obterTodasFaturas()
+        for f in faturas:
+            if f.id_encomenda == id_encomenda:
+                return f
+        return None
+
 
     def limpar_formulario(self):
         self.entry_id_cliente.delete(0, tk.END)
@@ -207,7 +228,6 @@ class EncomendaApp:
         encomenda_selecionada = self.tree.selection()
         if encomenda_selecionada:
            
-        
             item = encomenda_selecionada[0]
             valores = self.tree.item(item, "values")
             id_encomenda = valores[0]
@@ -267,4 +287,56 @@ class EncomendaApp:
             
         btn_guardar = tk.Button(self.nova_janela, text="Guardar Alterações", command=self.guardar_edicao)
         btn_guardar.grid(row=2, column=1, pady=20)
+        
+        
+        
+    def mostrar_fatura(self):
+        encomenda_selecionada = self.tree.selection()
+        if not encomenda_selecionada:
+            messagebox.showerror("Erro", "Para executar este comando tem de selecionar primeiro uma encomenda.")
+            return
+        
+        item = encomenda_selecionada[0]
+        valores = self.tree.item(item, "values")
+        self.id_encomenda_editada = valores[0]
+        
+
+        encomenda = self.get_id_encomenda(self.id_encomenda_editada)
+        produtos = self.encomenda_dal.obterTodosProdutos(self.id_encomenda_editada)
+      
+        self.janela_fatura = tk.Toplevel(self.root)
+        self.janela_fatura.title(f"Fatura")
+        self.janela_fatura.geometry("700x400")
+
+
+        self.tree_fatura = ttk.Treeview(self.janela_fatura, columns=("id", "data_emissao", "nome", "quantidade", "preco", "preco_total", "promocao","valor_total"), show="headings")
+        self.tree_fatura.heading("id", text="ID")
+        self.tree_fatura.heading("data_emissao", text="Data Emissão")
+        self.tree_fatura.heading("nome", text="Nome")
+        self.tree_fatura.heading("quantidade", text="Quantidade")
+        self.tree_fatura.heading("preco", text="Preço unitário")
+        self.tree_fatura.heading("preco_total", text="Preço total")
+        self.tree_fatura.heading("promocao", text="Promoção")
+        self.tree_fatura.heading("valor_total", text="Valor Acumulado")
+        self.tree_fatura.column("id", width=50)
+        self.tree_fatura.pack(fill="both", expand=True, padx=10, pady=10)
+       
+        valor_total=0
+        for p in produtos:
+            preco_total = p.quantidade * p.preco
+            valor_total += preco_total
+            data_hora_agora = datetime.datetime.now()
+            data_emissao = data_hora_agora.strftime("%d/%m/%Y %H:%M:%S")
+            self.tree_fatura.insert("", "end", values=(p.id_produto, data_emissao, p.nome, p.quantidade, p.preco, preco_total, valor_total))
+  
+        btn_imprimir_fatura = tk.Button(self.janela_fatura, text="Imprimir", command=self.imprimir_fatura)
+        btn_imprimir_fatura.pack(pady=5)
+  
+    def imprimir_fatura(self):
+        fatura = open("Fatura.txt", "x")
+        fatura.write("Fatura nº12")
+        fatura.close()
+        
+        
+        
         
