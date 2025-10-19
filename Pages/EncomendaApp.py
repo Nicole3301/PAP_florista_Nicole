@@ -8,6 +8,7 @@ from DAL.cliente_dal import ClienteDAL
 from DAL.fatura_dal import FaturaDAL
 import datetime 
 import io
+from DAL.promocao_dal import PromocaoDAL
 
 
 
@@ -24,6 +25,8 @@ class EncomendaApp:
         self.id_encomenda_editada = None
         self.fatura_dal = FaturaDAL(self.db)
         self.fatura = self.fatura_dal.obterTodasFaturas()
+        self.promocao_dal = PromocaoDAL(self.db)
+        self.promocao = self.promocao_dal.verificar_promocao()
     
         frame_form = tk.Frame(self.root, padx=10, pady=10)
         frame_form.pack(fill="x")
@@ -321,13 +324,19 @@ class EncomendaApp:
         self.tree_fatura.column("id", width=50)
         self.tree_fatura.pack(fill="both", expand=True, padx=10, pady=10)
        
+       
         valor_total=0
         for p in produtos:
             preco_total = p.quantidade * p.preco
-            valor_total += preco_total
+            for promo in self.promocao:
+                desconto = promo.desconto
+                break
+            valor_desconto = preco_total * desconto / 100
+            preco_com_desconto = preco_total - valor_desconto
+            valor_total += preco_com_desconto
             data_hora_agora = datetime.datetime.now()
             data_emissao = data_hora_agora.strftime("%d/%m/%Y %H:%M:%S")
-            self.tree_fatura.insert("", "end", values=(p.id_produto, data_emissao, p.nome, p.quantidade, p.preco, preco_total, valor_total))
+            self.tree_fatura.insert("", "end", values=(p.id_produto, data_emissao, p.nome, p.quantidade, p.preco, preco_total, valor_desconto, valor_total))
   
         btn_imprimir_fatura = tk.Button(self.janela_fatura, text="Imprimir", command=self.imprimir_fatura)
         btn_imprimir_fatura.pack(pady=5)
