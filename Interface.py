@@ -9,6 +9,7 @@ from Pages.CategoriaApp import CategoriaApp
 from Pages.EncomendaApp import EncomendaApp
 from Pages.PromocaoApp import PromocaoApp
 from Pages.FaturaApp import FaturaApp
+from Pages.UtilizadorApp import UtilizadorApp
 
    
 class Interface():    
@@ -37,6 +38,7 @@ class Interface():
         # Inicializar BD e DAL
         self.db = Database()
         
+    #def abrir_janela(self):
         notebook = ttk.Notebook(root)
         notebook.pack(expand=True, fill='both') 
     
@@ -44,38 +46,33 @@ class Interface():
         frame_produto = ttk.Frame(notebook, width=800, height=500)
         frame_categoria = ttk.Frame(notebook, width=800, height=500)
         frame_encomenda = ttk.Frame(notebook, width=800, height=500)
-        frame_funcionario = ttk.Frame(notebook, width=800, height=500)
         frame_promocao = ttk.Frame(notebook, width=800, height=500)
-        frame_fatura = ttk.Frame(notebook, width=800, height=500)
-    
+        frame_utilizador = ttk.Frame(notebook, width=800, height=500)
+                
         frame_cliente.pack(fill='both', expand=True)
         frame_produto.pack(fill='both', expand=True)
         frame_categoria.pack(fill='both', expand=True)
         frame_encomenda.pack(fill='both', expand=True)
-        frame_funcionario.pack(fill='both', expand=True)
         frame_promocao.pack(fill='both', expand=True)
-        frame_fatura.pack(fill='both', expand=True)
-
-        # add frames to notebook
+        frame_utilizador.pack(fill='both', expand=True)
 
         notebook.add(frame_cliente, text='Cliente')
         notebook.add(frame_produto, text='Produto')
         notebook.add(frame_categoria, text="Categoria")
         notebook.add(frame_encomenda, text='Encomenda')
-        notebook.add(frame_funcionario, text='Funcionário')
         notebook.add(frame_promocao, text="Promoção")
-        notebook.add(frame_fatura, text="Fatura")
+        notebook.add(frame_utilizador, text="Utilizadores")
         
         ClienteApp(frame_cliente, self.db)
         ProdutoApp(frame_produto, self.db)
         CategoriaApp(frame_categoria, self.db)
         EncomendaApp(frame_encomenda, self.db)
         PromocaoApp(frame_promocao, self.db)
-        FaturaApp(frame_fatura, self.db)
+        UtilizadorApp(frame_utilizador, self.db)
         
-     
-    
+          
 if __name__ == "__main__":
     root = tk.Tk()
     app = Interface(root)
     root.mainloop()
+    

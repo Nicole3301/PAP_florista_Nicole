@@ -43,25 +43,25 @@ class ClienteApp:
 
 
         # Botão para adicionar cliente
-        btn_adicionar = tk.Button(frame_form, text="Adicionar Cliente", command=self.adicionar_cliente)
+        btn_adicionar = tk.Button(frame_form, text="Adicionar Cliente", command=self.adicionar_cliente,bg="white")
         btn_adicionar.grid(row=6, column=0, columnspan=2, pady=10)
-        btn_adicionar.config(activebackground="pink", activeforeground="white")
+        #btn_adicionar.config(activebackground="pink", activeforeground="white")
         
         
         
         # Botão para editar cliente
-        btn_editar = tk.Button(frame_form, text="Editar Cliente", command=self.editar_clientes)
+        btn_editar = tk.Button(frame_form, text="Editar Cliente", command=self.editar_clientes,bg="white")
         btn_editar.grid(row=6, column=1, columnspan=2, pady=10)
         
         
         
         #Botão para remover cliente
-        btn_remover = tk.Button(frame_form, text="Remover Cliente", command=self.remover_cliente)
+        btn_remover = tk.Button(frame_form, text="Remover Cliente", command=self.remover_cliente,bg="white")
         btn_remover.grid(row=6, column=2, pady=10)
         
         
         #Botão para guardar as alterações do botão editar
-        btn_guardar = tk.Button(frame_form, text="Guardar Alterações", command=self.guardar_edicao)
+        btn_guardar = tk.Button(frame_form, text="Guardar Alterações", command=self.guardar_edicao,bg="white")
         btn_guardar.grid(row=2, column=5, pady=5)
         
         

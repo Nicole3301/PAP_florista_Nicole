@@ -7,8 +7,8 @@ from DB.DB_Utils import PG_DB_Utils as Database
 from DAL.cliente_dal import ClienteDAL
 from DAL.fatura_dal import FaturaDAL
 import datetime 
-import io
 from DAL.promocao_dal import PromocaoDAL
+import math
 
 
 
@@ -26,6 +26,7 @@ class EncomendaApp:
         self.fatura_dal = FaturaDAL(self.db)
         self.fatura = self.fatura_dal.obterTodasFaturas()
         self.promocao_dal = PromocaoDAL(self.db)
+        self.obter_promocao = self.promocao_dal.obterTodasPromocoes()
         self.promocao = self.promocao_dal.verificar_promocao()
     
         frame_form = tk.Frame(self.root, padx=10, pady=10)
@@ -59,18 +60,18 @@ class EncomendaApp:
         
 
         # Botão para adicionar encomenda
-        btn_adicionar = tk.Button(frame_form, text="Adicionar Encomenda", command=self.adicionar_encomenda)
+        btn_adicionar = tk.Button(frame_form, text="Adicionar Encomenda", command=self.adicionar_encomenda, width=17, bg="white", height=1)
         btn_adicionar.grid(row=5, column=0, columnspan=1, pady=5, padx=5)
 
         #Botão para remover a encomenda
-        btn_remover = tk.Button(frame_form, text="Remover Encomenda", command=self.remover_encomenda)
+        btn_remover = tk.Button(frame_form, text="Remover Encomenda", command=self.remover_encomenda, width=17, bg="white", height=1)
         btn_remover.grid(row=5, column=1, columnspan=1, pady=5)
         
-        btn_fatura = tk.Button(frame_form, text="Fatura", command=self.mostrar_fatura)
-        btn_fatura.grid(row=1, column=3, pady=5)
+        btn_fatura = tk.Button(frame_form, text="Fatura", command=self.mostrar_fatura, width=10, bg="white", height=1)
+        btn_fatura.grid(row=1, column=2, pady=5)
         
-        btn_editar= tk.Button(frame_form, text="Alterar Estado", command=self.mudar_estado)
-        btn_editar.grid(row=3, column=3, pady=5)
+        btn_editar= tk.Button(frame_form, text="Alterar Estado", command=self.mudar_estado, width=14, bg="white", height=1)
+        btn_editar.grid(row=2, column=2, pady=5)
         
         
         # Tabela de clientes
@@ -328,23 +329,42 @@ class EncomendaApp:
         valor_total=0
         for p in produtos:
             preco_total = p.quantidade * p.preco
-            for promo in self.promocao:
+            for promo in self.obter_promocao:
                 desconto = promo.desconto
                 break
-            valor_desconto = preco_total * desconto / 100
+            valor_desconto = (preco_total * desconto / 100)
             preco_com_desconto = preco_total - valor_desconto
-            valor_total += preco_com_desconto
+            valor_total += round(preco_com_desconto, 2)
             data_hora_agora = datetime.datetime.now()
-            data_emissao = data_hora_agora.strftime("%d/%m/%Y %H:%M:%S")
-            self.tree_fatura.insert("", "end", values=(p.id_produto, data_emissao, p.nome, p.quantidade, p.preco, preco_total, valor_desconto, valor_total))
+            self.data_emissao = data_hora_agora.strftime("%d/%m/%Y %H:%M:%S")
+            self.tree_fatura.insert("", "end", values=(p.id_produto, self.data_emissao, p.nome, p.quantidade, p.preco, preco_total, desconto, valor_total))
   
         btn_imprimir_fatura = tk.Button(self.janela_fatura, text="Imprimir", command=self.imprimir_fatura)
         btn_imprimir_fatura.pack(pady=5)
   
     def imprimir_fatura(self):
-        fatura = open("Fatura.txt", "x")
-        fatura.write("Fatura nº12")
-        fatura.close()
+        with open("Fatura.txt", "w") as fatura:
+            fatura.write("  Fatura  \n".center(50))
+            fatura.write(f"Data Emissão: {self.data_emissao}\n")
+            fatura.write("---------------------------------------------------------------\n")
+            fatura.write("Quantidade |        Produtos         |  Preço Unitário \n")
+            for item in self.tree_fatura.get_children():
+                informacoes = self.tree_fatura.item(item, "values")
+                fatura.write(f"{informacoes[3]} |  {informacoes[2]}  |   {informacoes[4]}\n")
+                fatura.write("---------------------------------------------------------------\n")
+            fatura.write(f"Preço Total: {informacoes[5]}\n")
+            fatura.write(f"Desconto: {informacoes[6]}\n")
+            fatura.write(f"Valor Total: {informacoes[7]}\n") 
+            fatura.write("\n")
+            fatura.write("\n")
+            
+            fatura.write("--------------------------------------\n")
+            fatura.write("      Obrigado pela Preferência     \n")
+            fatura.write("--------------------------------------\n")
+            
+            messagebox.showinfo("Concluído", "A fatura foi imprimida com sucesso!")
+            
+            fatura.close()
         
         
         

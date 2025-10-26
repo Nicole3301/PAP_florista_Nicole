@@ -16,7 +16,7 @@ class FaturaApp:
 
 
         # Botão para adicionar cliente
-        btn_adicionar = tk.Button(frame_form, text="Adicionar promocao", command=self.imprimir_fatura)
+        btn_adicionar = tk.Button(frame_form, text="Adicionar promocao", command=self.imprimir_fatura, bg="white", height=1)
         btn_adicionar.grid(row=4, column=0, pady=10)
         #btn_adicionar.config(activebackground="pink", activeforeground="white")
         

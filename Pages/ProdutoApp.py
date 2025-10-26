@@ -38,21 +38,21 @@ class ProdutoApp:
         self.entry_id_categoria['values'] = [c.nome for c in self.categorias]
 
         # Botão para adicionar cliente
-        btn_adicionar = tk.Button(frame_form, text="Adicionar Produto", command=self.adicionar_produto)
-        btn_adicionar.grid(row=4, column=0, columnspan=1, pady=5, padx=5)
+        btn_adicionar = tk.Button(frame_form, text="Adicionar Produto", command=self.adicionar_produto, bg="white", height=1)
+        btn_adicionar.grid(row=6, column=0, columnspan=1, pady=10)
         
         # Botão para editar cliente
-        btn_editar= tk.Button(frame_form, text="Editar Produto", command=self.editar_produtos)
-        btn_editar.grid(row=4, column=1,  columnspan=1, pady=5)
+        btn_editar= tk.Button(frame_form, text="Editar Produto", command=self.editar_produtos, bg="white", height=1)
+        btn_editar.grid(row=6, column=1, columnspan=2, pady=10)
 
         #Botão para remover cliente
-        btn_remover = tk.Button(frame_form, text="Remover Produto", command=self.remover_produto)
-        btn_remover.grid(row=4, column=2, pady=5)
+        btn_remover = tk.Button(frame_form, text="Remover Produto", command=self.remover_produto, bg="white", height=1)
+        btn_remover.grid(row=6, column=2, columnspan=2, pady=10)
         
 
         #Botão para guardar as alterações do botão editar
-        btn_guardar = tk.Button(frame_form, text="Guardar Alterações", command=self.guardar_edicao)
-        btn_guardar.grid(row=2, column=4, pady=5)
+        btn_guardar = tk.Button(frame_form, text="Guardar Alterações", command=self.guardar_edicao, bg="white", height=1)
+        btn_guardar.grid(row=2, column=4, columnspan=1, pady=5, padx=8)
         
         
         # Tabela de clientes

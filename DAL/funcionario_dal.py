@@ -1,10 +1,9 @@
 from Models.Funcionario import Funcionario
+from Models.Pessoa import Pessoa
 
 class FuncionarioDAL:
     def __init__(self, db):
         self.db = db
-
-
 
     def criarFuncionario(self, funcionario: Funcionario):
         
@@ -21,8 +20,6 @@ class FuncionarioDAL:
         """
         self.db.executaQuery(query_funcionario, (pessoa_id, funcionario.cargo, funcionario.departamento, funcionario.salario, funcionario.data_contratacao))
         return pessoa_id
-
-
 
     def obterTodosFuncionarios(self):
         query = """
@@ -46,6 +43,7 @@ class FuncionarioDAL:
             data_contratacao=row[9]
         ) for row in rows]
 
+
     def atualizarFuncionario(self, funcionario: Funcionario):
         query_pessoa = """
         UPDATE Pessoa
@@ -63,5 +61,5 @@ class FuncionarioDAL:
 
  
     def eliminarFuncionario(self, id_funcionario:int):
-        self.db.executaQuery("DELETE FROM Funcionario WHERE id_cliente=%s", (id_funcionario,))
+        self.db.executaQuery("DELETE FROM Funcionario WHERE id_funcionario=%s", (id_funcionario,))
         self.db.executaQuery("DELETE FROM Pessoa WHERE id_pessoa=%s", (id_funcionario,))

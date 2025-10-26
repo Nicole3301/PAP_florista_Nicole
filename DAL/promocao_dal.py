@@ -48,10 +48,12 @@ class PromocaoDAL:
         INNER JOIN Produto AS p ON ep.id_produto = p.id_produto 
         INNER JOIN Produto_promocao AS pp ON p.id_produto = pp.id_produto
         INNER JOIN Promocao AS pr ON pp.id_promocao = pr.id_promocao
-        WHERE e.data_encomenda BETWEEN pr.data_inicio AND pr.data_fim 
+        WHERE e.data_encomenda BETWEEN pr.data_inicio AND pr.data_fim
+        ORDER BY e.data_encomenda DESC
+        LIMIT 1
         """
-
         return self.db.retornaListaDados(query)
+    
     
    
     def atualizarPromocao(self, promocao: Promocao):

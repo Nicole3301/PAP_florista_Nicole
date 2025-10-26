@@ -33,21 +33,21 @@ class PromocaoApp:
 
 
         # Botão para adicionar cliente
-        btn_adicionar = tk.Button(frame_form, text="Adicionar promocao", command=self.adicionar_promocao)
+        btn_adicionar = tk.Button(frame_form, text="Adicionar promocao", command=self.adicionar_promocao, bg="white", height=1)
         btn_adicionar.grid(row=4, column=0, pady=10)
         #btn_adicionar.config(activebackground="pink", activeforeground="white")
         
         # Botão para editar cliente
-        btn_editar = tk.Button(frame_form, text="Editar promocao", command=self.editar_promocao)
+        btn_editar = tk.Button(frame_form, text="Editar promocao", command=self.editar_promocao, bg="white", height=1)
         btn_editar.grid(row=4, column=1, pady=10)
         
         #Botão para remover cliente
-        btn_remover = tk.Button(frame_form, text="Remover promocao", command=self.remover_promocao)
+        btn_remover = tk.Button(frame_form, text="Remover promocao", command=self.remover_promocao, bg="white", height=1)
         btn_remover.grid(row=4, column=2, pady=10)
         
         #Botão para guardar as alterações do botão editar
-        btn_guardar = tk.Button(frame_form, text="Guardar Alterações", command=self.guardar_edicao)
-        btn_guardar.grid(row=2, column=5, pady=5)
+        btn_guardar = tk.Button(frame_form, text="Guardar Alterações", command=self.guardar_edicao, bg="white", height=1)
+        btn_guardar.grid(row=2, column=3, pady=5)
         
         
         # Tabela de clientes
