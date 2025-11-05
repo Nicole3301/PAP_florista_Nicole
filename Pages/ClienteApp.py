@@ -13,7 +13,8 @@ class ClienteApp:
         # Frame do formulário
         frame_form = tk.Frame(self.root, padx=10, pady=10)
         frame_form.pack(fill="x")
-        style = ttk.Style()
+        self.style = ttk.Style()
+        #self.style.configure(bg="lightgreen")
 
         # Labels e Entrys
         tk.Label(frame_form, text="Nome:").grid(row=0, column=0, sticky="w")
@@ -42,27 +43,24 @@ class ClienteApp:
         
 
 
-        # Botão para adicionar cliente
         btn_adicionar = tk.Button(frame_form, text="Adicionar Cliente", command=self.adicionar_cliente,bg="white")
         btn_adicionar.grid(row=6, column=0, columnspan=2, pady=10)
-        #btn_adicionar.config(activebackground="pink", activeforeground="white")
+        btn_adicionar.config(activebackground="lightgreen")
         
-        
-        
-        # Botão para editar cliente
+    
         btn_editar = tk.Button(frame_form, text="Editar Cliente", command=self.editar_clientes,bg="white")
         btn_editar.grid(row=6, column=1, columnspan=2, pady=10)
+        btn_editar.config(activebackground="lightgreen")
         
         
-        
-        #Botão para remover cliente
         btn_remover = tk.Button(frame_form, text="Remover Cliente", command=self.remover_cliente,bg="white")
         btn_remover.grid(row=6, column=2, pady=10)
+        btn_remover.config(activebackground="red")
         
         
-        #Botão para guardar as alterações do botão editar
         btn_guardar = tk.Button(frame_form, text="Guardar Alterações", command=self.guardar_edicao,bg="white")
         btn_guardar.grid(row=2, column=5, pady=5)
+        btn_guardar.config(activebackground="lightgreen")
         
         
         # Tabela de clientes
@@ -77,10 +75,14 @@ class ClienteApp:
         
         self.tree.column("id", width=50)
         self.tree.pack(fill="both", expand=True, padx=10, pady=10)
+        #self.tree.configure('focus', background="lightgreen")
+        #self.tree.bind("<Motion>", self.sair)
+        #self.tree.configure(self.sair)
 
 
         # Carregar clientes existentes
         self.carregar_clientes()
+        
 
     def adicionar_cliente(self):
         try:

@@ -40,19 +40,22 @@ class ProdutoApp:
         # Botão para adicionar cliente
         btn_adicionar = tk.Button(frame_form, text="Adicionar Produto", command=self.adicionar_produto, bg="white", height=1)
         btn_adicionar.grid(row=6, column=0, columnspan=1, pady=10)
+        btn_adicionar.config(activebackground="lightgreen")
         
         # Botão para editar cliente
         btn_editar= tk.Button(frame_form, text="Editar Produto", command=self.editar_produtos, bg="white", height=1)
         btn_editar.grid(row=6, column=1, columnspan=2, pady=10)
+        btn_editar.config(activebackground="lightgreen")
 
         #Botão para remover cliente
         btn_remover = tk.Button(frame_form, text="Remover Produto", command=self.remover_produto, bg="white", height=1)
         btn_remover.grid(row=6, column=2, columnspan=2, pady=10)
-        
+        btn_remover.config(activebackground="red")
 
         #Botão para guardar as alterações do botão editar
         btn_guardar = tk.Button(frame_form, text="Guardar Alterações", command=self.guardar_edicao, bg="white", height=1)
         btn_guardar.grid(row=2, column=4, columnspan=1, pady=5, padx=8)
+        btn_guardar.config(activebackground="lightgreen")
         
         
         # Tabela de clientes

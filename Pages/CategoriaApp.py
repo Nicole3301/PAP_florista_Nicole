@@ -25,21 +25,21 @@ class CategoriaApp:
         
         
         
-        # Botão para adicionar cliente
         btn_adicionar = tk.Button(frame_form, text="Adicionar Categoria", command=self.adicionar_categoria, width=15, bg="white", height=1)
         btn_adicionar.grid(row=6, column=0, pady=10)
-        
-        # Botão para editar cliente
+        btn_adicionar.config(activebackground="lightgreen")
+    
         btn_editar = tk.Button(frame_form, text="Editar Categoria", command=self.editar_categoria, width=15, bg="white", height=1)
         btn_editar.grid(row=6, column=1, pady=10)
+        btn_editar.config(activebackground="lightgreen")
         
-        #Botão para remover cliente
         btn_remover = tk.Button(frame_form, text="Remover Categoria", command=self.remover_categoria, width=15, bg="white", height=1)
         btn_remover.grid(row=6, column=2, pady=10)
+        btn_remover.config(activebackground="red")
         
-        #Botão para guardar as alterações do botão editar
         btn_guardar = tk.Button(frame_form, text="Guardar Alterações", command=self.guardar_edicao, width=15, bg="white", height=1)
         btn_guardar.grid(row=3, column=2, pady=5)
+        btn_guardar.config(activebackground="lightgreen")
         
         
         # Tabela de clientes

@@ -86,7 +86,7 @@ class EncomendaDAL:
             SET stock = stock + %s
             WHERE id_produto = %s
             """
-        self.db.executaQuery(query_update_stock, (quantidade, id_produto))    
+            self.db.executaQuery(query_update_stock, (quantidade, id_produto))    
         
         self.db.executaQuery("DELETE FROM Encomenda_produto WHERE id_encomenda=%s", (id_encomenda,)) # apaga 
         self.db.executaQuery("DELETE FROM Encomenda WHERE id_encomenda=%s", (id_encomenda,)) # apaga a encomenda 

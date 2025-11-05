@@ -64,6 +64,6 @@ class PromocaoDAL:
         """
         self.db.executaQuery(query, (promocao.nome, promocao.desconto, promocao.data_inicio, promocao.data_fim, promocao.id_promocao))
         
-    def eliminarEncomenda(self, id_promocao:int):
-        self.db.executaQuery("DELETE FROM Produto_encomenda WHERE id_promocao=%s", (id_promocao,)) 
+    def eliminarPromocao(self, id_promocao:int):
+        self.db.executaQuery("DELETE FROM Produto_promocao WHERE id_promocao=%s", (id_promocao,)) 
         self.db.executaQuery("DELETE FROM Promocao WHERE id_promocao=%s", (id_promocao,)) 
